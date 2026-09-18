@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +11,7 @@
             margin: 0;
             padding: 12px;
             font-family: sans-serif;
-            background: #ffffff;
+            background: #ffffff; /* pure white background */
         }
 
         h2 {
@@ -29,7 +30,7 @@
             font-size: 16px;
             border: none;
             border-radius: 6px;
-            background: #e0e0e0;
+            background: #e0e0e0; /* microwidget gray */
             color: #000;
             text-align: left;
             width: auto;
@@ -44,7 +45,13 @@
             border: 1px solid #ccc;
             border-radius: 6px;
             resize: none;
-            background-color: #ffffff;
+            background-color: #ffffff; /* pure white */
+            -webkit-tap-highlight-color: transparent; /* remove blue tap highlight */
+        }
+
+        textarea:focus {
+            outline: none;              /* remove blue outline */
+            border: 1px solid #ccc;     /* keep normal border */
         }
     </style>
 </head>
