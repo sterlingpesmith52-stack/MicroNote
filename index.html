@@ -10,38 +10,41 @@
             margin: 0;
             padding: 12px;
             font-family: sans-serif;
-            background: #f0f0f0; /* standard microwidget gray */
+            background: #f0f0f0;
         }
 
         h2 {
-            margin: 0 0 12px 0;
+            margin: 0 0 8px 0;
             font-size: 22px;
             font-weight: 600;
             text-align: left;
         }
 
+        .controls {
+            margin-bottom: 8px;
+        }
+
+        button {
+            padding: 8px 14px;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            background: #e0e0e0;
+            color: #000;
+            text-align: left;
+            width: auto;
+        }
+
         textarea {
             width: 100%;
-            height: 70vh;
+            height: 65vh;
             font-size: 18px;
             padding: 10px;
             box-sizing: border-box;
             border: 1px solid #ccc;
             border-radius: 6px;
             resize: none;
-            background-color: #ffffff; /* pure white input area */
-        }
-
-        button {
-            margin-top: 12px;
-            padding: 10px 16px;
-            font-size: 16px;
-            border: none;
-            border-radius: 6px;
-            background: #e0e0e0; /* microwidget gray button */
-            color: #000;
-            text-align: left;
-            width: auto; /* auto-width per your style */
+            background-color: #ffffff;
         }
     </style>
 </head>
@@ -50,26 +53,25 @@
 
     <h2>MicroNote</h2>
 
-    <textarea id="noteBox" placeholder="Type your notes here..."></textarea>
+    <div class="controls">
+        <button id="clearBtn">Clear</button>
+    </div>
 
-    <button id="clearBtn">Clear</button>
+    <textarea id="noteBox" placeholder="Type your notes here..."></textarea>
 
     <script>
         const noteBox = document.getElementById("noteBox");
         const clearBtn = document.getElementById("clearBtn");
 
-        // Load saved note on startup
         const saved = localStorage.getItem("microNoteContent");
         if (saved) {
             noteBox.value = saved;
         }
 
-        // Auto-save on every keystroke
         noteBox.addEventListener("input", () => {
             localStorage.setItem("microNoteContent", noteBox.value);
         });
 
-        // Clear button
         clearBtn.addEventListener("click", () => {
             noteBox.value = "";
             localStorage.removeItem("microNoteContent");
