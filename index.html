@@ -10,7 +10,14 @@
             margin: 0;
             padding: 12px;
             font-family: sans-serif;
-            background: #fafafa;
+            background: #f0f0f0; /* standard microwidget gray */
+        }
+
+        h2 {
+            margin: 0 0 12px 0;
+            font-size: 22px;
+            font-weight: 600;
+            text-align: left;
         }
 
         textarea {
@@ -22,6 +29,7 @@
             border: 1px solid #ccc;
             border-radius: 6px;
             resize: none;
+            background-color: #ffffff; /* pure white input area */
         }
 
         button {
@@ -30,42 +38,43 @@
             font-size: 16px;
             border: none;
             border-radius: 6px;
-            background: #e74c3c;
-            color: white;
+            background: #e0e0e0; /* microwidget gray button */
+            color: #000;
+            text-align: left;
+            width: auto; /* auto-width per your style */
         }
     </style>
 </head>
 
 <body>
 
-    <h2>MicroNotes</h2>
+    <h2>MicroNote</h2>
 
     <textarea id="noteBox" placeholder="Type your notes here..."></textarea>
 
-    <button id="clearBtn">Clear Notes</button>
+    <button id="clearBtn">Clear</button>
 
     <script>
         const noteBox = document.getElementById("noteBox");
         const clearBtn = document.getElementById("clearBtn");
 
         // Load saved note on startup
-        const saved = localStorage.getItem("microNotesContent");
+        const saved = localStorage.getItem("microNoteContent");
         if (saved) {
             noteBox.value = saved;
         }
 
         // Auto-save on every keystroke
         noteBox.addEventListener("input", () => {
-            localStorage.setItem("microNotesContent", noteBox.value);
+            localStorage.setItem("microNoteContent", noteBox.value);
         });
 
         // Clear button
         clearBtn.addEventListener("click", () => {
             noteBox.value = "";
-            localStorage.removeItem("microNotesContent");
+            localStorage.removeItem("microNoteContent");
         });
     </script>
 
 </body>
 </html>
-
