@@ -13,30 +13,25 @@
             background: #ffffff; /* pure white */
         }
 
-        /* MicroFoundary header */
+        /* MicroFoundary header — stacked layout */
         .mf-header {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 12px;
+            flex-direction: column;   /* stack logo + title */
+            align-items: flex-start;  /* left aligned */
+            margin-bottom: 16px;      /* space below header block */
         }
 
         .mf-header img {
-            width: 140px;   /* larger, readable logo */
+            width: 140px;             /* correct readable size */
             height: auto;
-            border-radius: 12px; /* correct brand rounding */
+            border-radius: 12px;      /* brand rounding */
+            margin-bottom: 8px;       /* space between logo and title */
         }
 
         .mf-header-title {
             font-size: 22px;
             font-weight: 600;
-        }
-
-        h2 {
-            margin: 0 0 8px 0;
-            font-size: 22px;
-            font-weight: 600;
-            text-align: left;
+            margin-bottom: 12px;      /* padding beneath MicroNote (unchanged) */
         }
 
         .controls {
