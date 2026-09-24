@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,7 +10,14 @@
             margin: 0;
             padding: 12px;
             font-family: sans-serif;
-            background: #ffffff; /* pure white background */
+            background: #ffffff; /* pure white */
+        }
+
+        .logo {
+            width: 64px;
+            height: auto;
+            display: block;
+            margin-bottom: 8px;
         }
 
         h2 {
@@ -46,17 +52,19 @@
             border-radius: 6px;
             resize: none;
             background-color: #ffffff; /* pure white */
-            -webkit-tap-highlight-color: transparent; /* remove blue tap highlight */
+            -webkit-tap-highlight-color: transparent;
         }
 
         textarea:focus {
-            outline: none;              /* remove blue outline */
-            border: 1px solid #ccc;     /* keep normal border */
+            outline: none;
+            border: 1px solid #ccc;
         }
     </style>
 </head>
 
 <body>
+
+    <img src="IMG_1741.jpeg" class="logo">
 
     <h2>MicroNote</h2>
 
@@ -70,15 +78,18 @@
         const noteBox = document.getElementById("noteBox");
         const clearBtn = document.getElementById("clearBtn");
 
+        /* Restore saved content */
         const saved = localStorage.getItem("microNoteContent");
         if (saved) {
             noteBox.value = saved;
         }
 
+        /* Autosave */
         noteBox.addEventListener("input", () => {
             localStorage.setItem("microNoteContent", noteBox.value);
         });
 
+        /* Clear */
         clearBtn.addEventListener("click", () => {
             noteBox.value = "";
             localStorage.removeItem("microNoteContent");
