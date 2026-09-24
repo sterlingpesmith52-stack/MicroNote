@@ -13,11 +13,23 @@
             background: #ffffff; /* pure white */
         }
 
-        .logo {
-            width: 64px;
+        /* MicroFoundary header */
+        .mf-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .mf-header img {
+            width: 96px;   /* enlarged logo */
             height: auto;
-            display: block;
-            margin-bottom: 8px;
+            border-radius: 6px;
+        }
+
+        .mf-header-title {
+            font-size: 22px;
+            font-weight: 600;
         }
 
         h2 {
@@ -51,7 +63,7 @@
             border: 1px solid #ccc;
             border-radius: 6px;
             resize: none;
-            background-color: #ffffff; /* pure white */
+            background-color: #ffffff;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -64,7 +76,11 @@
 
 <body>
 
-    <img src="IMG_1741.jpeg" class="logo">
+    <!-- MicroFoundary header -->
+    <div class="mf-header">
+        <img src="IMG_1741.jpeg" alt="MicroFoundary Logo">
+        <div class="mf-header-title">MicroFoundary</div>
+    </div>
 
     <h2>MicroNote</h2>
 
