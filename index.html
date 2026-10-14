@@ -1,193 +1,157 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>MicroNote</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MicroTimer</title>
 
-    <style>
-        body {
-            margin: 0;
-            padding: 12px;
-            padding-bottom: 90px;
-            font-family: sans-serif;
-            background: #ffffff;
-        }
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        background: white;
+    }
 
-        /* MicroFoundary Header */
-        .mf-header {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            margin-bottom: 16px;
-        }
+    .header-row {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        margin-bottom: 20px;
+    }
 
-        .mf-header img {
-            width: 140px;
-            height: auto;
-            border-radius: 12px;
-            margin-bottom: 8px;
-        }
+    .logo {
+        width: 128px;
+        height: auto;
+        max-width: none;
+        margin-bottom: 10px;
+    }
 
-        .mf-header-title {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 4px;
-        }
+    .title {
+        font-size: 24px;
+        font-weight: 700;
+        text-align: left;
+    }
 
-        .mf-tagline {
-            font-size: 14px;
-            color: #666666;
-            margin-bottom: 12px;
-        }
+    .tagline {
+        font-size: 14px;
+        color: #666;
+        margin-top: 4px;
+        text-align: left;
+    }
 
-        .controls {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
+    #label {
+        font-size: 16px;
+        margin-bottom: 6px;
+        text-align: left;
+    }
 
-        button {
-            padding: 8px 14px;
-            font-size: 16px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-        }
+    #display {
+        font-size: 32px;
+        padding: 12px 20px;
+        background: white;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 16px;
+        text-align: left;
+    }
 
-        #clearBtn {
-            background: #000000;
-            color: #ffffff;
-        }
+    .row {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+    }
 
-        #copyBtn {
-            background: #0078D4;
-            color: #ffffff;
-        }
+    button {
+        padding: 10px 18px;
+        font-size: 18px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        display: inline-block;
+    }
 
-        textarea {
-            width: 100%;
-            height: 58vh;
-            font-size: 18px;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #cccccc;
-            border-radius: 6px;
-            resize: none;
-            background: #ffffff;
-            -webkit-tap-highlight-color: transparent;
-        }
+    #startBtn,
+    #stopBtn,
+    #copyBtn {
+        background: #0078ff;
+        color: white;
+    }
 
-        textarea:focus {
-            outline: none;
-            border-color: #cccccc;
-        }
+    #resetBtn {
+        background: #d9d9d9;
+        color: #222;
+    }
 
-        /* Fixed Footer */
-        .buy-footer {
-            position: fixed;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #ffffff;
-            border-top: 1px solid #dddddd;
-            padding: 12px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-        }
+    button:active {
+        opacity: 0.85;
+    }
 
-        .buy-btn {
-            background: #0078D4;
-            color: #ffffff;
-            border: none;
-            border-radius: 6px;
-            padding: 8px 16px;
-            font-size: 16px;
-            font-weight: 600;
-            white-space: nowrap;
-            cursor: pointer;
-        }
-    </style>
+    .footer {
+        margin-top: 30px;
+        font-size: 14px;
+        color: #666;
+        text-align: left;
+    }
+</style>
 </head>
 
 <body>
 
-    <div class="mf-header">
-        <img src="IMG_1741.jpeg" alt="MicroFoundary Logo">
-        <div class="mf-header-title">MicroNote</div>
-        <div class="mf-tagline">A Simple Place for Every Thought</div>
-    </div>
+<div class="header-row">
+    <img src="./IMG_1741.jpeg" class="logo" alt="MicroFoundary Logo">
+    <div class="title">MicroTimer</div>
+    <div class="tagline">Every second counts.</div>
+</div>
 
-    <div class="controls">
-        <button id="clearBtn">Clear</button>
-        <button id="copyBtn">Copy</button>
-    </div>
+<div id="label">Seconds</div>
+<div id="display">0</div>
 
-    <textarea
-        id="noteBox"
-        placeholder="Type your notes here..."
-    ></textarea>
+<div class="row">
+    <button id="startBtn" onclick="startTimer()">Start</button>
+    <button id="stopBtn" onclick="stopTimer()">Stop</button>
+    <button id="resetBtn" onclick="resetTimer()">Reset</button>
+    <button id="copyBtn" onclick="copyTime()">Copy</button>
+</div>
 
-    <div class="buy-footer" id="buyFooter">
-        <button class="buy-btn">Buy This Tool</button>
-    </div>
+<div class="footer">
+    Powered by MicroFoundary
+</div>
 
-    <script>
-        const noteBox = document.getElementById("noteBox");
-        const clearBtn = document.getElementById("clearBtn");
-        const copyBtn = document.getElementById("copyBtn");
-        const buyFooter = document.getElementById("buyFooter");
+<script>
+let timer = null;
+let count = 0;
 
-        /* Restore saved note */
-        const saved = localStorage.getItem("microNoteContent");
+function updateDisplay() {
+    document.getElementById("display").textContent = count;
+}
 
-        if (saved) {
-            noteBox.value = saved;
-        }
+function startTimer() {
+    if (timer === null) {
+        timer = setInterval(() => {
+            count++;
+            updateDisplay();
+        }, 1000);
+    }
+}
 
-        /* Autosave */
-        noteBox.addEventListener("input", () => {
-            localStorage.setItem(
-                "microNoteContent",
-                noteBox.value
-            );
-        });
+function stopTimer() {
+    clearInterval(timer);
+    timer = null;
+}
 
-        /* Clear */
-        clearBtn.addEventListener("click", () => {
-            noteBox.value = "";
-            localStorage.removeItem("microNoteContent");
-        });
+function resetTimer() {
+    stopTimer();
+    count = 0;
+    updateDisplay();
+}
 
-        /* Copy */
-        copyBtn.addEventListener("click", async () => {
-            try {
-                await navigator.clipboard.writeText(
-                    noteBox.value
-                );
-
-                const original = copyBtn.textContent;
-                copyBtn.textContent = "Copied";
-
-                setTimeout(() => {
-                    copyBtn.textContent = original;
-                }, 1200);
-
-            } catch (err) {
-                alert("Unable to copy text.");
-            }
-        });
-
-        /* Hide footer while keyboard is open */
-        noteBox.addEventListener("focus", () => {
-            buyFooter.style.display = "none";
-        });
-
-        noteBox.addEventListener("blur", () => {
-            buyFooter.style.display = "flex";
-        });
-    </script>
+function copyTime() {
+    navigator.clipboard.writeText(count.toString());
+}
+</script>
 
 </body>
 </html>
