@@ -3,154 +3,172 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MicroTimer</title>
+<title>MicroNote</title>
 
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 20px;
-        background: white;
-    }
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+    font-family:Arial,sans-serif;
+}
 
-    .header-row {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        margin-bottom: 20px;
-    }
+body{
+    background:#ffffff;
+    color:#111;
+    max-width:700px;
+    margin:0 auto;
+    padding:20px;
+    padding-bottom:100px;
+}
 
-    .logo {
-        width: 128px;
-        height: auto;
-        max-width: none;
-        margin-bottom: 10px;
-    }
+.logo{
+    width:70px;
+    margin-bottom:12px;
+}
 
-    .title {
-        font-size: 24px;
-        font-weight: 700;
-        text-align: left;
-    }
+h1{
+    font-size:24px;
+    font-weight:bold;
+    margin-bottom:8px;
+}
 
-    .tagline {
-        font-size: 14px;
-        color: #666;
-        margin-top: 4px;
-        text-align: left;
-    }
+.subtitle{
+    color:#666;
+    margin-bottom:20px;
+    font-size:14px;
+}
 
-    #label {
-        font-size: 16px;
-        margin-bottom: 6px;
-        text-align: left;
-    }
+textarea{
+    width:100%;
+    min-height:400px;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    resize:vertical;
+    font-size:16px;
+    line-height:1.5;
+}
 
-    #display {
-        font-size: 32px;
-        padding: 12px 20px;
-        background: white;
-        border: 1px solid #ccc;
-        border-radius: 6px;
-        width: 100%;
-        box-sizing: border-box;
-        margin-bottom: 16px;
-        text-align: left;
-    }
+.button-row{
+    display:flex;
+    gap:10px;
+    margin-top:15px;
+    flex-wrap:wrap;
+}
 
-    .row {
-        display: flex;
-        gap: 10px;
-        flex-wrap: wrap;
-    }
+button{
+    background:#111;
+    color:white;
+    border:none;
+    border-radius:8px;
+    padding:10px 16px;
+    cursor:pointer;
+    font-size:14px;
+}
 
-    button {
-        padding: 10px 18px;
-        font-size: 18px;
-        border: none;
-        border-radius: 6px;
-        cursor: pointer;
-        display: inline-block;
-    }
+button:hover{
+    opacity:.9;
+}
 
-    #startBtn,
-    #stopBtn,
-    #copyBtn {
-        background: #0078ff;
-        color: white;
-    }
+.status{
+    margin-top:12px;
+    font-size:13px;
+    color:#666;
+}
 
-    #resetBtn {
-        background: #d9d9d9;
-        color: #222;
-    }
+.footer{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    background:#fff;
+    border-top:1px solid #ddd;
+    padding:12px;
+}
 
-    button:active {
-        opacity: 0.85;
-    }
-
-    .footer {
-        margin-top: 30px;
-        font-size: 14px;
-        color: #666;
-        text-align: left;
-    }
+.buy-btn{
+    width:100%;
+    background:#111;
+    color:#fff;
+    border:none;
+    border-radius:8px;
+    padding:12px;
+    font-size:16px;
+    font-weight:bold;
+}
 </style>
 </head>
-
 <body>
 
-<div class="header-row">
-    <img src="./IMG_1741.jpeg" class="logo" alt="MicroFoundary Logo">
-    <div class="title">MicroTimer</div>
-    <div class="tagline">Every second counts.</div>
+<img src="img_1741.JPEG" alt="MicroFoundary Logo" class="logo">
+
+<h1>MicroNote</h1>
+
+<p class="subtitle">
+Capture thoughts instantly. Notes save automatically.
+</p>
+
+<textarea id="noteBox" placeholder="Start typing..."></textarea>
+
+<div class="button-row">
+    <button onclick="saveNote()">Save</button>
+    <button onclick="clearNote()">Clear</button>
+    <button onclick="copyNote()">Copy</button>
 </div>
 
-<div id="label">Seconds</div>
-<div id="display">0</div>
-
-<div class="row">
-    <button id="startBtn" onclick="startTimer()">Start</button>
-    <button id="stopBtn" onclick="stopTimer()">Stop</button>
-    <button id="resetBtn" onclick="resetTimer()">Reset</button>
-    <button id="copyBtn" onclick="copyTime()">Copy</button>
+<div class="status" id="status">
+Ready
 </div>
 
-<div class="footer">
-    Powered by MicroFoundary
+<div class="footer" id="footer">
+    <button class="buy-btn">
+        Buy This Tool
+    </button>
 </div>
 
 <script>
-let timer = null;
-let count = 0;
+const noteBox = document.getElementById('noteBox');
+const status = document.getElementById('status');
+const footer = document.getElementById('footer');
 
-function updateDisplay() {
-    document.getElementById("display").textContent = count;
+window.addEventListener('load', () => {
+    const saved = localStorage.getItem('micronote');
+    if(saved){
+        noteBox.value = saved;
+    }
+});
+
+function saveNote(){
+    localStorage.setItem('micronote', noteBox.value);
+    status.textContent = 'Saved ✓';
 }
 
-function startTimer() {
-    if (timer === null) {
-        timer = setInterval(() => {
-            count++;
-            updateDisplay();
-        }, 1000);
+noteBox.addEventListener('input', () => {
+    localStorage.setItem('micronote', noteBox.value);
+    status.textContent = 'Auto-saved ✓';
+});
+
+function clearNote(){
+    if(confirm('Delete note?')){
+        noteBox.value = '';
+        localStorage.removeItem('micronote');
+        status.textContent = 'Cleared';
     }
 }
 
-function stopTimer() {
-    clearInterval(timer);
-    timer = null;
+function copyNote(){
+    navigator.clipboard.writeText(noteBox.value);
+    status.textContent = 'Copied ✓';
 }
 
-function resetTimer() {
-    stopTimer();
-    count = 0;
-    updateDisplay();
-}
+noteBox.addEventListener('focus', () => {
+    footer.style.display = 'none';
+});
 
-function copyTime() {
-    navigator.clipboard.writeText(count.toString());
-}
+noteBox.addEventListener('blur', () => {
+    footer.style.display = 'block';
+});
 </script>
 
 </body>
