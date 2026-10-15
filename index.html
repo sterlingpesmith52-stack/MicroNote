@@ -18,7 +18,7 @@ body{
     color:#111;
     max-width:700px;
     margin:0 auto;
-    padding:12px;
+    padding:16px;
     padding-bottom:90px;
 }
 
@@ -39,13 +39,13 @@ h1{
     font-size:14px;
     color:#666;
     line-height:1.25;
-    margin-bottom:10px;
+    margin-bottom:12px;
 }
 
 textarea{
     width:100%;
-    height:38vh;
-    min-height:220px;
+    height:calc(42vh + 24px);
+    min-height:275px;
     padding:15px;
     border:1px solid #ddd;
     border-radius:10px;
@@ -62,8 +62,6 @@ textarea{
 }
 
 button{
-    background:#0078D4;
-    color:#fff;
     border:none;
     border-radius:8px;
     padding:10px 16px;
@@ -72,12 +70,18 @@ button{
     font-weight:600;
 }
 
-button:hover{
-    opacity:.9;
+.primary-btn{
+    background:#0078D4;
+    color:#fff;
 }
 
 .secondary-btn{
     background:#111111;
+    color:#fff;
+}
+
+button:hover{
+    opacity:.9;
 }
 
 .status{
@@ -126,9 +130,9 @@ Capture thoughts instantly. Notes save automatically.
 <textarea id="noteBox" placeholder="Start typing..."></textarea>
 
 <div class="button-row">
-    <button onclick="saveNote()">Save</button>
+    <button class="primary-btn" onclick="saveNote()">Save</button>
     <button class="secondary-btn" onclick="clearNote()">Clear</button>
-    <button onclick="copyNote()">Copy</button>
+    <button class="primary-btn" onclick="copyNote()">Copy</button>
 </div>
 
 <div class="status" id="status">
@@ -151,28 +155,28 @@ const status = document.getElementById('status');
 const footer = document.getElementById('footer');
 const charCount = document.getElementById('charCount');
 
-function updateCharCount(){
+function updateCharCount() {
     charCount.textContent = noteBox.value.length + ' characters';
 }
 
 window.addEventListener('load', () => {
     const saved = localStorage.getItem('micronote');
 
-    if(saved){
+    if (saved) {
         noteBox.value = saved;
     }
 
     updateCharCount();
 });
 
-function saveNote(){
+function saveNote() {
     localStorage.setItem('micronote', noteBox.value);
     status.textContent = 'Saved ✓';
     updateCharCount();
 }
 
-function clearNote(){
-    if(confirm('Delete note?')){
+function clearNote() {
+    if (confirm('Delete note?')) {
         noteBox.value = '';
         localStorage.removeItem('micronote');
         status.textContent = 'Cleared';
@@ -180,7 +184,7 @@ function clearNote(){
     }
 }
 
-function copyNote(){
+function copyNote() {
     navigator.clipboard.writeText(noteBox.value);
     status.textContent = 'Copied ✓';
 }
