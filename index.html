@@ -58,17 +58,22 @@ textarea{
 }
 
 button{
-    background:#111;
+    background:#0078D4;
     color:white;
     border:none;
     border-radius:8px;
     padding:10px 16px;
     cursor:pointer;
     font-size:14px;
+    font-weight:600;
 }
 
 button:hover{
     opacity:.9;
+}
+
+.secondary-btn{
+    background:#111111;
 }
 
 .status{
@@ -77,25 +82,32 @@ button:hover{
     color:#666;
 }
 
+.char-count{
+    margin-top:4px;
+    font-size:11px;
+    color:#777;
+}
+
 .footer{
     position:fixed;
-    left:0;
-    right:0;
-    bottom:0;
-    background:#fff;
-    border-top:1px solid #ddd;
-    padding:12px;
+    bottom:12px;
+    left:50%;
+    transform:translateX(-50%);
+    background:transparent;
+    border:none;
+    padding:0;
 }
 
 .buy-btn{
-    width:100%;
-    background:#111;
-    color:#fff;
+    background:#0078D4;
+    color:white;
     border:none;
     border-radius:8px;
-    padding:12px;
-    font-size:16px;
-    font-weight:bold;
+    padding:10px 18px;
+    font-size:14px;
+    font-weight:600;
+    width:auto;
+    box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
 </style>
 </head>
@@ -113,12 +125,16 @@ Capture thoughts instantly. Notes save automatically.
 
 <div class="button-row">
     <button onclick="saveNote()">Save</button>
-    <button onclick="clearNote()">Clear</button>
+    <button class="secondary-btn" onclick="clearNote()">Clear</button>
     <button onclick="copyNote()">Copy</button>
 </div>
 
 <div class="status" id="status">
 Ready
+</div>
+
+<div class="char-count" id="charCount">
+0 characters
 </div>
 
 <div class="footer" id="footer">
@@ -131,22 +147,32 @@ Ready
 const noteBox = document.getElementById('noteBox');
 const status = document.getElementById('status');
 const footer = document.getElementById('footer');
+const charCount = document.getElementById('charCount');
+
+function updateCharCount(){
+    charCount.textContent = `${noteBox.value.length} characters`;
+}
 
 window.addEventListener('load', () => {
     const saved = localStorage.getItem('micronote');
+
     if(saved){
         noteBox.value = saved;
     }
+
+    updateCharCount();
 });
 
 function saveNote(){
     localStorage.setItem('micronote', noteBox.value);
     status.textContent = 'Saved ✓';
+    updateCharCount();
 }
 
 noteBox.addEventListener('input', () => {
     localStorage.setItem('micronote', noteBox.value);
     status.textContent = 'Auto-saved ✓';
+    updateCharCount();
 });
 
 function clearNote(){
@@ -154,6 +180,7 @@ function clearNote(){
         noteBox.value = '';
         localStorage.removeItem('micronote');
         status.textContent = 'Cleared';
+        updateCharCount();
     }
 }
 
