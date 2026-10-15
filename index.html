@@ -18,30 +18,33 @@ body{
     color:#111;
     max-width:700px;
     margin:0 auto;
-    padding:20px;
-    padding-bottom:100px;
+    padding:12px;
+    padding-bottom:90px;
 }
 
 .logo{
     width:70px;
-    margin-bottom:12px;
+    display:block;
+    margin-bottom:4px;
 }
 
 h1{
     font-size:24px;
-    font-weight:bold;
-    margin-bottom:8px;
+    font-weight:700;
+    line-height:1;
+    margin-bottom:4px;
 }
 
 .subtitle{
-    color:#666;
-    margin-bottom:20px;
     font-size:14px;
+    color:#666;
+    line-height:1.25;
+    margin-bottom:8px;
 }
 
 textarea{
     width:100%;
-    min-height:400px;
+    min-height:65vh;
     padding:15px;
     border:1px solid #ddd;
     border-radius:10px;
@@ -53,13 +56,13 @@ textarea{
 .button-row{
     display:flex;
     gap:10px;
-    margin-top:15px;
     flex-wrap:wrap;
+    margin-top:10px;
 }
 
 button{
     background:#0078D4;
-    color:white;
+    color:#fff;
     border:none;
     border-radius:8px;
     padding:10px 16px;
@@ -77,13 +80,13 @@ button:hover{
 }
 
 .status{
-    margin-top:12px;
+    margin-top:8px;
     font-size:13px;
     color:#666;
 }
 
 .char-count{
-    margin-top:4px;
+    margin-top:2px;
     font-size:11px;
     color:#777;
 }
@@ -93,27 +96,25 @@ button:hover{
     bottom:12px;
     left:50%;
     transform:translateX(-50%);
-    background:transparent;
-    border:none;
-    padding:0;
+    z-index:1000;
 }
 
 .buy-btn{
     background:#0078D4;
-    color:white;
+    color:#fff;
     border:none;
-    border-radius:8px;
-    padding:10px 18px;
+    border-radius:10px;
+    padding:12px 24px;
     font-size:14px;
-    font-weight:600;
+    font-weight:700;
     width:auto;
-    box-shadow:0 2px 6px rgba(0,0,0,.15);
+    box-shadow:0 2px 8px rgba(0,0,0,.15);
 }
 </style>
 </head>
 <body>
 
-<img src="img_1741.JPEG" alt="MicroFoundary Logo" class="logo">
+<img src="IMG_1741.jpeg" alt="MicroFoundary Logo" class="logo">
 
 <h1>MicroNote</h1>
 
@@ -150,7 +151,7 @@ const footer = document.getElementById('footer');
 const charCount = document.getElementById('charCount');
 
 function updateCharCount(){
-    charCount.textContent = `${noteBox.value.length} characters`;
+    charCount.textContent = noteBox.value.length + ' characters';
 }
 
 window.addEventListener('load', () => {
@@ -169,12 +170,6 @@ function saveNote(){
     updateCharCount();
 }
 
-noteBox.addEventListener('input', () => {
-    localStorage.setItem('micronote', noteBox.value);
-    status.textContent = 'Auto-saved ✓';
-    updateCharCount();
-});
-
 function clearNote(){
     if(confirm('Delete note?')){
         noteBox.value = '';
@@ -188,6 +183,12 @@ function copyNote(){
     navigator.clipboard.writeText(noteBox.value);
     status.textContent = 'Copied ✓';
 }
+
+noteBox.addEventListener('input', () => {
+    localStorage.setItem('micronote', noteBox.value);
+    status.textContent = 'Auto-saved ✓';
+    updateCharCount();
+});
 
 noteBox.addEventListener('focus', () => {
     footer.style.display = 'none';
